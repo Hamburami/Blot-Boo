@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thought Void</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main id="canvas" aria-label="Thought canvas">
+      <div id="thought-column"></div>
+      <div id="void" role="button" aria-label="Enter the void" tabindex="0"></div>
+    </main>
+
+    <aside id="void-portal" aria-label="Enter the void">
+      <button id="exit-void" aria-label="Leave the void"></button>
+      <canvas id="draw-canvas"></canvas>
+      <svg id="connection-svg"></svg>
+      <div id="void-stream"></div>
+    </aside>
+
+    <template id="thought-template">
+      <div class="thought" contenteditable="true" spellcheck="false"></div>
+    </template>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
+
+

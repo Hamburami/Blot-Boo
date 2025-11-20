@@ -1,0 +1,284 @@
+:root {
+  font-family: 'Georgia', serif;
+  color: #17130f;
+  --paper: #f4e4bc;
+  --ink: #17130f;
+  --void: #060606;
+  background-color: var(--paper);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+#canvas {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#thought-column {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding-bottom: 120px;
+}
+
+#void {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, #151515, var(--void));
+  border-radius: 50%;
+  cursor: pointer;
+  filter: blur(2.5px);
+  transition: width 0.3s ease, height 0.3s ease, filter 0.3s ease;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+#void:hover {
+  width: 200px;
+  height: 200px;
+  filter: blur(0);
+}
+
+.thought {
+  position: absolute;
+  border: none;
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  color: #2c1810;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  white-space: pre-wrap;
+  z-index: 2;
+  user-select: none;
+  outline: none !important;
+  box-sizing: border-box;
+}
+
+.thought:hover:not(.editing) {
+  background: rgba(139, 115, 85, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.thought.editing {
+  cursor: text;
+  user-select: text;
+  outline: none;
+}
+
+.thought.dragging {
+  cursor: grabbing !important;
+  transform: scale(1.05) !important;
+  z-index: 10 !important;
+  background: rgba(139, 115, 85, 0.15) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: none !important;
+}
+
+.thought.launching {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+
+#void-portal {
+  position: fixed;
+  inset: 0;
+  background: #010101;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  overflow: hidden;
+  z-index: 100;
+}
+
+#void-portal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#draw-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+  cursor: default;
+}
+
+#void-portal.active #draw-canvas {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+#connection-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#void-stream {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 80px clamp(24px, 8vw, 140px) 120px;
+  overflow: hidden;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.void-thought {
+  position: absolute;
+  max-width: min(320px, 60vw);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  opacity: 0.85;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  pointer-events: none;
+}
+
+.void-thought.glowing {
+  filter: drop-shadow(0 0 8px rgba(244, 228, 188, 0.6));
+  opacity: 1;
+  transition: filter 1.5s ease-out;
+}
+
+.void-thought.fresh {
+    filter: blur(0.5px);
+    filter: drop-shadow(2px 2px 8px rgba(244, 228, 188, 0.746));
+    /* color: var(--paper); */
+}
+
+.void-thought.no-connections {
+  filter: blur(3px);
+  transition: filter 1s ease;
+}
+
+.void-thought.one-connection {
+  filter: blur(2px);
+  transition: filter 0.8s ease;
+}
+
+.void-thought.two-connections {
+  filter: blur(1px);
+  transition: filter 0.6s ease;
+}
+
+.void-thought.stable {
+  filter: blur(0);
+  transition: filter 0.3s ease;
+}
+
+.void-thought time {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0;
+  margin-top: 6px;
+  transition: opacity 6s ease;
+}
+
+.void-thought:hover time {
+  opacity: 0.5;
+  transition: opacity 0.6s ease;
+}
+
+.connection-line {
+  stroke: rgba(244, 228, 188, 0.5);
+  stroke-width: 1;
+  fill: none;
+  pointer-events: stroke;
+  opacity: 0.3;
+  transition: opacity 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+.connection-line:hover {
+  opacity: 0.9;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 4px rgba(244, 228, 188, 0.6));
+}
+
+.connection-line.multiple {
+  stroke-width: 1.5;
+  opacity: 0.25;
+}
+
+.connection-line.multiple:hover {
+  opacity: 0.8;
+  stroke-width: 2;
+}
+
+#exit-void {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: none;
+  background: var(--paper);
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(245, 236, 220, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease;
+  z-index: 200;
+  touch-action: manipulation;
+  filter: blur(8px);
+}
+
+#exit-void:hover,
+#exit-void:focus-visible {
+  width: 160px;
+  height: 160px;
+  filter: blur(0);
+  box-shadow: 0 15px 45px rgba(245, 236, 220, 0.6);
+}
+
+#exit-void:focus-visible {
+  outline: 2px solid rgba(244, 228, 188, 0.8);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  #thought-column {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  #void-stream {
+    padding: 120px 32px 80px;
+  }
+}
