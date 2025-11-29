@@ -2,8 +2,11 @@ name = "blot-thoughts-worker"
 main = "server.js"
 compatibility_date = "2024-01-01"
 
+[[routes]]
+pattern = "blot.boo/api/*"
+zone_name = "blot.boo"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "blot-thoughts"
 database_id = "2e15102c-e1f0-45d4-9749-87787bad6d87"
-
