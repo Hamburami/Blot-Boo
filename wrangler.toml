@@ -1,4 +1,4 @@
-name = "blot-thoughts-worker"
+name = "blot-boo"
 main = "server.js"
 compatibility_date = "2024-01-01"
 
