@@ -1,19 +1,16 @@
-CREATE TABLE IF NOT EXISTS thoughts (
+CREATE TABLE IF NOT EXISTS [Thoughts] (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  text TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  latitude REAL,
-  longitude REAL,
-  lost INTEGER DEFAULT 0
+  content TEXT,
+  "time-created" INTEGER,
+  "expiration-time" INTEGER,
+  latitude INTEGER,
+  longitude INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS connections (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS Connections (
   thought_id_a INTEGER NOT NULL,
   thought_id_b INTEGER NOT NULL,
-  created_at TEXT NOT NULL,
-  FOREIGN KEY (thought_id_a) REFERENCES thoughts(id),
-  FOREIGN KEY (thought_id_b) REFERENCES thoughts(id),
-  UNIQUE(thought_id_a, thought_id_b)
+  count INTEGER NOT NULL DEFAULT 1,
+  PRIMARY KEY (thought_id_a, thought_id_b)
 );
 

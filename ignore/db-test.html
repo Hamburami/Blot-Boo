@@ -8,28 +8,7 @@
   </head>
   <body>
     <main class="shell">
-      <header>
-        <h1>Thoughts Database Console</h1>
-        <p>Quickly POST new thoughts and inspect the latest rows in Cloudflare D1.</p>
-      </header>
-
-      <section class="panel">
-        <h2>API Endpoint</h2>
-        <form id="api-config">
-          <label for="api-base">Worker URL (leave blank for same origin)</label>
-          <input
-            id="api-base"
-            name="api-base"
-            type="url"
-            placeholder="https://your-worker.workers.dev"
-            autocomplete="off"
-          />
-          <small>
-            Tip: pass <code>?api=https://.../</code> in the URL or set <code>window.API_BASE</code> before loading this page.
-          </small>
-        </form>
-      </section>
-
+      
       <section class="panel">
         <h2>Create a Thought</h2>
         <form id="thought-form">

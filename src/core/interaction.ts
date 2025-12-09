@@ -1,5 +1,6 @@
-import { State } from './state.js';
-import { segmentDist, bezierSamples, centerOf } from './geometry.js';
+import { State } from './state';
+import { segmentDist, bezierSamples, centerOf } from './geometry';
+import { createConnection, severConnection } from '../api/connectionsApi';
 
 const TAIL=80;
 
@@ -23,13 +24,15 @@ export function endStroke(){
   c.down=false;
 
   const hits=[...State.activeThoughts];
-  if (hits.length===2){
-    connect(hits[0], hits[1]);
-  } else if (hits.length===1){
-    pull(hits[0], State.cursor.path);
-  } else {
-    sever(State.cursor.path);
-  }
+  // if (hits.length===2){
+  //   connect(hits[0], hits[1]);
+  // } else if (hits.length===1){
+  //   pull(hits[0], State.cursor.path);
+  // } else {
+  //   sever(State.cursor.path);
+  // }
+
+  pull(hits[hits.length-1], State.cursor.path);
 
   fadePath();
   State.activeThoughts.clear();
@@ -53,9 +56,7 @@ function detectHits(pt){
 }
 
 function connect(a,b){
-  import('../api/connectionsApi.js').then(({createConnection})=>{
-    createConnection(a,b);
-  });
+  createConnection(a,b);
 }
 
 function pull(id,path){
@@ -122,9 +123,7 @@ function sever(path){
   });
 
   if (best){
-    import('../api/connectionsApi.js').then(({severConnection})=>{
-      severConnection(best.a,best.b);
-    });
+    severConnection(best.a,best.b);
   }
 }
 

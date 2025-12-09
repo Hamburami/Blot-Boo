@@ -1,6 +1,6 @@
-import { State } from '../core/state.js';
-import { saveThought } from '../api/thoughtsApi.js';
-import { enterVoid } from './voidPortal.js';
+import { State } from '../core/state';
+import { saveThought } from '../api/thoughtsApi';
+import { enterVoid } from './voidPortal';
 
 let dragEl = null;
 let downX = 0;

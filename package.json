@@ -4,7 +4,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,11 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "nodemon": "^3.1.11",
+    "rollup": "^4.13.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.2"
   }
 }

@@ -1,5 +1,5 @@
-import { State } from '../core/state.js';
-import { centerOf } from '../core/geometry.js';
+import { State } from '../core/state';
+import { centerOf } from '../core/geometry';
 
 export function renderConnections(){
   const svg=document.getElementById('connection-svg');

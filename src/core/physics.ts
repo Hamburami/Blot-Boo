@@ -1,5 +1,5 @@
-import { clamp } from './geometry.js';
-import { State } from './state.js';
+import { clamp } from './geometry';
+import { State } from './state';
 
 export function updateAll(state){
   if (state.voidThoughts.size===0) return;

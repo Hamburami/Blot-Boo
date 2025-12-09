@@ -1,5 +1,7 @@
-const apiInput = document.getElementById('api-base');
-const apiForm = document.getElementById('api-config');
+const API_BASE =
+  (typeof window !== 'undefined' && (window.__API_BASE__ || window.API_BASE)) ||
+  'https://blot.boo';
+
 const thoughtForm = document.getElementById('thought-form');
 const thoughtInput = document.getElementById('thought-text');
 const formStatus = document.getElementById('form-status');
@@ -7,54 +9,72 @@ const lastUpdated = document.getElementById('last-updated');
 const refreshBtn = document.getElementById('refresh-btn');
 const thoughtsView = document.getElementById('thoughts-view');
 
-const STORAGE_KEY = 'thoughtsConsole.apiBase';
 let pollTimer = null;
 
 init();
 
 function init() {
-  const urlParam = new URLSearchParams(window.location.search).get('api');
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  const globalBase =
-    typeof window !== 'undefined'
-      ? window.__API_BASE__ || window.API_BASE
-      : '';
-
-  apiInput.value = normalizeBase(urlParam || globalBase || stored || '');
-
-  apiForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    persistApiBase();
-    manualRefresh();
-  });
-
-  apiInput.addEventListener('change', () => {
-    persistApiBase();
-    manualRefresh();
-  });
-
   thoughtForm.addEventListener('submit', handleThoughtSubmit);
   refreshBtn.addEventListener('click', manualRefresh);
 
   manualRefresh();
 }
 
-function persistApiBase() {
-  const base = normalizeBase(apiInput.value);
-  apiInput.value = base;
-  window.localStorage.setItem(STORAGE_KEY, base);
+
+async function manualRefresh() {
+  clearInterval(pollTimer);
+  await loadThoughts();
+  pollTimer = window.setInterval(loadThoughts, 8000);
 }
 
-function normalizeBase(value) {
-  return (value || '').trim().replace(/\/$/, '');
+async function loadThoughts() {
+  //thoughtsView.innerHTML = '<div class="empty-state">Loading…</div>';
+  try {
+    const res = await fetch(resolve('/api/thoughts'));
+    if (!res.ok) {
+      const data = await safeJson(res);
+      throw new Error(data?.error || `Request failed (${res.status})`);
+    }
+    const data = await res.json();
+    renderThoughts(Array.isArray(data.thoughts) ? data.thoughts : []);
+    const now = new Date();
+    lastUpdated.textContent = `Updated ${now.toLocaleTimeString()}`;
+  } catch (error) {
+    console.error(error);
+    thoughtsView.innerHTML = `<div class="empty-state">⚠️ ${error.message}</div>`;
+    lastUpdated.textContent = '';
+  }
 }
+
+
 
 function resolve(path) {
-  const base = normalizeBase(apiInput.value);
   if (!path.startsWith('/')) {
     throw new Error('Path must start with "/"');
   }
-  return base ? `${base}${path}` : path;
+  return `${API_BASE}${path}`;
+}
+
+/// NOTHING BELOW THIS LINE IS CURRENTLY RELEVANT
+
+
+async function addThought(text, lat = null, lon = null) {
+  const res = await fetch("https://blot.boo/api/thoughts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      text: text,
+      latitude: lat,
+      longitude: lon
+    })
+  });
+
+  return res.json();
+}
+
+async function getThoughts() {
+  const res = await fetch("https://blot.boo/api/thoughts/recent");
+  return res.json();
 }
 
 async function handleThoughtSubmit(event) {
@@ -85,6 +105,8 @@ async function handleThoughtSubmit(event) {
   }
 }
 
+
+
 function setFormPending(pending, message = '') {
   thoughtInput.disabled = pending;
   refreshBtn.disabled = pending;
@@ -96,31 +118,6 @@ function setFormPending(pending, message = '') {
         formStatus.textContent = '';
       }
     }, 2000);
-  }
-}
-
-async function manualRefresh() {
-  clearInterval(pollTimer);
-  await loadThoughts();
-  pollTimer = window.setInterval(loadThoughts, 8000);
-}
-
-async function loadThoughts() {
-  thoughtsView.innerHTML = '<div class="empty-state">Loading…</div>';
-  try {
-    const res = await fetch(resolve('/api/thoughts/recent'));
-    if (!res.ok) {
-      const data = await safeJson(res);
-      throw new Error(data?.error || `Request failed (${res.status})`);
-    }
-    const data = await res.json();
-    renderThoughts(Array.isArray(data.thoughts) ? data.thoughts : []);
-    const now = new Date();
-    lastUpdated.textContent = `Updated ${now.toLocaleTimeString()}`;
-  } catch (error) {
-    console.error(error);
-    thoughtsView.innerHTML = `<div class="empty-state">⚠️ ${error.message}</div>`;
-    lastUpdated.textContent = '';
   }
 }
 

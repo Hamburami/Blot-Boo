@@ -1,8 +1,10 @@
-import { State } from '../core/state.js';
+import { State } from '../core/state';
 
 export function setupCanvas(){
-  const canvas=document.getElementById('draw-canvas');
+  const canvas=document.getElementById('draw-canvas') as HTMLCanvasElement | null;
+  if (!canvas) throw new Error('draw-canvas element missing');
   const ctx=canvas.getContext('2d');
+  if (!ctx) throw new Error('2d context unavailable');
 
   function resize(){
     const r=canvas.getBoundingClientRect();
@@ -14,9 +16,20 @@ export function setupCanvas(){
   return {canvas,ctx};
 }
 
-export function redraw(ctx){
+export function redraw(ctx: CanvasRenderingContext2D){
   const c=State.cursor;
   ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+
+  // active stroke path (while drawing)
+  if (c.down && c.path && c.path.length>1){
+    ctx.strokeStyle='rgba(255,255,255,0.8)';
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(c.path[0].x,c.path[0].y);
+    for(let i=1;i<c.path.length;i++) ctx.lineTo(c.path[i].x,c.path[i].y);
+    ctx.stroke();
+    ctx.lineWidth=1;
+  }
 
   // fade path
   if (c.fade && c.fade.path.length>1){
@@ -45,7 +58,7 @@ export function redraw(ctx){
   }
 }
 
-export function updateCursorTrail(pt){
+export function updateCursorTrail(pt: { x: number; y: number }){
   const c=State.cursor;
   const now=Date.now();
   if(!c.down){

@@ -1,5 +1,5 @@
-import { State } from '../core/state.js';
-import { withApi } from './base.js';
+import { State } from '../core/state';
+import { withApi } from './base';
 
 export async function createConnection(a,b){
   const r=await fetch(withApi('/api/connections'),{

@@ -154,7 +154,7 @@ body {
   height: 100%;
   padding: 80px clamp(24px, 8vw, 140px) 120px;
   overflow: hidden;
-  z-index: 3;
+  z-index: 5;
   pointer-events: none;
 }
 
@@ -167,7 +167,7 @@ body {
   white-space: pre-wrap;
   word-wrap: break-word;
   transition: opacity 0.3s ease, filter 0.3s ease;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .void-thought.glowing {
@@ -182,23 +182,30 @@ body {
     /* color: var(--paper); */
 }
 
-.void-thought.no-connections {
+.void-thought.most-faded {
   filter: blur(3px);
   transition: filter 1s ease;
 }
 
-.void-thought.one-connection {
+.void-thought.slightly-faded {
   filter: blur(2px);
   transition: filter 0.8s ease;
 }
 
-.void-thought.two-connections {
+.void-thought.almost-clear {
   filter: blur(1px);
   transition: filter 0.6s ease;
 }
 
-.void-thought.stable {
+.void-thought.clear {
   filter: blur(0);
+  transition: filter 0.3s ease;
+}
+
+.void-thought.almost-clear:hover,
+.void-thought.slightly-faded:hover,
+.void-thought.most-faded:hover {
+  filter: blur(0px) !important;
   transition: filter 0.3s ease;
 }
 
