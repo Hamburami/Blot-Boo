@@ -3,3 +3,7 @@ node_modules/
 dist/
 .DS_Store
 
+# Worker files (local development only, contain sensitive config)
+worker-guy.js
+worker.js
+wrangler.toml
