@@ -2,11 +2,11 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 export default {
-  input: 'src/main.ts',
+  input: 'src/note-blot.ts',
   output: {
     file: 'app.js',
     format: 'iife',
-    name: 'ThoughtVoidApp',
+    name: 'BlotApp',
     sourcemap: true,
   },
   plugins: [

@@ -3,24 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blot</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Auth Test - Blot</title>
+    <link rel="stylesheet" href="auth-test.css">
 </head>
 <body>
-    <!-- <canvas id="canvas" width="800" height="800"></canvas> -->
-
-    <div class="thoughts-container" id="thoughtsContainer">
-        <!-- <div class="thoughts-container__page"> Thoughts will be here </div> -->
-        <div class = "thoughts-container__end" id="endOfPageMarker"></div>
+    <div class="test-container">
+        <h1>Authentication Component Test</h1>
+        <p>Testing the login/signup interface</p>
     </div>
-    
-    <!-- Auth -->
+
+    <!-- Auth Button (similar to thought-list button) -->
     <div id="auth-container">
-        <div class="auth-button" id="authButton">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-        </div>
+        <div class="auth-button" id="authButton">👤</div>
         <div class="auth-panel hidden" id="authPanel">
             <div class="auth-panel__header">
                 <div class="auth-panel__tabs">
@@ -28,6 +22,8 @@
                     <button class="auth-tab" data-tab="signup">Sign Up</button>
                 </div>
             </div>
+
+            <!-- Login Form -->
             <div class="auth-form" id="loginForm">
                 <div class="auth-form__field">
                     <label for="loginEmail">Email</label>
@@ -40,6 +36,8 @@
                 <button class="auth-form__submit" id="loginSubmit">Sign In</button>
                 <div class="auth-form__message" id="loginMessage"></div>
             </div>
+
+            <!-- Signup Form -->
             <div class="auth-form hidden" id="signupForm">
                 <div class="auth-form__field">
                     <label for="signupEmail">Email</label>
@@ -56,6 +54,8 @@
                 <button class="auth-form__submit" id="signupSubmit">Create Account</button>
                 <div class="auth-form__message" id="signupMessage"></div>
             </div>
+
+            <!-- Logged In State -->
             <div class="auth-logged-in hidden" id="loggedInView">
                 <div class="auth-user-info">
                     <div class="auth-user-email" id="userEmail"></div>
@@ -65,17 +65,7 @@
         </div>
     </div>
 
-    <!-- Archive -->
-    <div id="thought-list-and-button">
-        <div class="thought-list-button" id="tlButton">☰</div>
-        <div class="thought-list hidden" id="thoughtList"></div>
-    </div>
-    <div class="ink-blot" id="inkBlot">
-        <div class="ink-blot__msg">Hello I'm Blot.</div>
-    </div>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
-    <script type="module" src="app.js"></script>
+    <script src="auth-test.js"></script>
 </body>
 </html>
+

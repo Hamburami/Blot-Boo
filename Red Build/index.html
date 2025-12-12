@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- <canvas id="canvas" width="800" height="800"></canvas> -->
+
+    <div class="thoughts-container" id="thoughtsContainer">
+        <!-- <div class="thoughts-container__page"> Thoughts will be here </div> -->
+        <div class = "thoughts-container__end" id="endOfPageMarker"></div>
+    </div>
+    
+    <!-- <div class="generate-button" id="generateButton">. ݁₊ </div> -->
+    <!-- <div class="save-button" id="saveButton">💾</div> -->
+    <!-- <div class="clear-button" id="clearButton">×</div> -->
+    <div id="thought-list-and-button">
+        <div class="thought-list-button" id="tlButton">☰</div>
+        <div class="thought-list hidden" id="thoughtList"></div>
+    </div>
+    <div class="ink-blot" id="inkBlot">
+        <div class="ink-blot__msg">Hello I'm Blot.</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+    <script type="module" src="javascript/note-blot.js "></script>
+</body>
+</html>

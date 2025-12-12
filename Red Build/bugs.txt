@@ -1,0 +1,12 @@
+BUGS
+
+- Cant click on part of text to edit it; moving cursor with arrow keys and typing does not edit section but instead tacks on char to end of thought
+- Clear thoughts button doesn't work, it should archive
+- Enter key on blank spot creates a new thought
+- Right clicking on a thought starts dragging
+- shouldn't move cursor/thoughts position beyond screen
+- connections don't quite line up on corners or have the right direction/shortest path
+
+
+    Visual
+    - lines of connections are half resolution

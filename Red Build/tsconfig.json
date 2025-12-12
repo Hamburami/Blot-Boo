@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "lib": ["DOM", "es2023"],
+        "rootDir": "./typescript",
+        "outDir": "./javascript",
+    }
+}

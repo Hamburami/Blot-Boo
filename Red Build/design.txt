@@ -1,0 +1,18 @@
+DESIGN
+
+- About page  /  Learn more
+    https://breathsync.bolt.host/learn-more
+    - have a contact form cool
+
+- All public menu items should come from blot
+    - Should he be the only interface?
+
+- Navigation
+    - pressing delete on empty thought should delete the thought
+
+
+
+    TODO | -> notes
+      |
+      (
+       <--> notes 

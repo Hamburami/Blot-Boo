@@ -1,0 +1,21 @@
+FEATURES
+
+thought-list
+- if you click a thought from the thought list that is active it should select/highlight/go-to the thought on the page
+- if a thought is beyond a certian length, have the html txt element in thought list be cut off with ... (maximum thought-card height)
+- drag a thought from thought list onto page to activate it
+    - if you edit it from there it becomes a new thought?
+
+- infinite page, click and drag
+- defined zoom levels/zones/spaces -> frames
+    - 
+
+- onion skinning?
+    - half opacity or clear
+        - 66% opacity for draft
+        - clear for archive
+
+map
+- click on a public thought to reveal a path or markings 
+- see votes or comments on public thoughts
+- like a thread except 2D, any thought can spur of other thoughts in any direction (a graph)
